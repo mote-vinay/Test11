@@ -1,4 +1,3 @@
-
 pipeline {
     agent any
 
@@ -24,21 +23,21 @@ pipeline {
             }
         }
 
-        stage('Login to Docker Hub') {
-            steps {
-                script {
-                    withCredentials([usernamePassword(
-                        credentialsId: "${DOCKER_CREDENTIALS}",
-                        usernameVariable: 'DOCKER_USER',
-                        passwordVariable: 'DOCKER_PASS'
-                    )]) {
-                        sh """
-                        echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
-                        """
-                    }
-                }
+       stage('Login to Docker Hub') {
+    steps {
+        script {
+            withCredentials([usernamePassword(
+                credentialsId: 'docker-hub-creds',
+                usernameVariable: 'DOCKER_USER',
+                passwordVariable: 'DOCKER_PASS'
+            )]) {
+                sh '''
+                echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+                '''
             }
         }
+    }
+}
 
         stage('Push Image') {
             steps {
