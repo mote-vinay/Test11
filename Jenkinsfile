@@ -21,13 +21,16 @@ pipeline {
         }
 
         stage('Publish HTML') {
-            steps {
-                publishHTML([
-                    reportDir: '.',
-                    reportFiles: 'index.html',
-                    reportName: 'HTML Preview'
-                ])
-            }
-        }
+    steps {
+        publishHTML(target: [
+            reportDir: '.',
+            reportFiles: 'index.html',
+            reportName: 'HTML Preview',
+            keepAll: true,
+            alwaysLinkToLastBuild: true,
+            allowMissing: true
+        ])
+    }
+}
     }
 }
