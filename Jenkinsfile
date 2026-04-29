@@ -1,39 +1,26 @@
+
 pipeline {
     agent any
 
-    environment {
-        IMAGE_NAME = "registration-form"
-        CONTAINER_NAME = "registration-container"
+    triggers {
+        pollSCM('H/2 * * * *')  // Check GitHub every 2 minutes
     }
 
     stages {
 
         stage('Clone Code') {
             steps {
-                git 'https://github.com/YOUR_USERNAME/YOUR_REPO.git'
+                git 'https://github.com/mote-vinay/Test11.git'
             }
         }
 
-        stage('Build Docker Image') {
+        stage('Build (Optional)') {
             steps {
-                sh 'docker build -t $IMAGE_NAME .'
+                echo 'No Docker build - add your build steps here if needed'
             }
         }
 
-        stage('Stop Old Container') {
-            steps {
-                sh 'docker stop $CONTAINER_NAME || true'
-                sh 'docker rm $CONTAINER_NAME || true'
-            }
-        }
-
-        stage('Run Container') {
-            steps {
-                sh 'docker run -d -p 80:80 --name $CONTAINER_NAME $IMAGE_NAME'
-            }
-        }
-
-        stage('Publish HTML (optional)') {
+        stage('Publish HTML') {
             steps {
                 publishHTML([
                     reportDir: '.',
