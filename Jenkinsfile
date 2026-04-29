@@ -8,11 +8,11 @@ pipeline {
 
     stages {
 
-        stage('Clone Code') {
-            steps {
-                git 'https://github.com/mote-vinay/Test11.git'
-            }
-        }
+       stage('Clone Code') {
+    steps {
+        git branch: 'main', url: 'https://github.com/mote-vinay/Test11.git'
+    }
+}
 
         stage('Build (Optional)') {
             steps {
