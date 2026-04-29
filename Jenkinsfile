@@ -53,7 +53,7 @@ pipeline {
                     sh """
                     docker stop myapp || true
                     docker rm myapp || true
-                    docker run -d --name myapp -p 8080:80 ${DOCKER_IMAGE}:${BUILD_NUMBER}
+                   docker run -d --name myapp -p 8088:80 motevinay/user-registration1:${BUILD_NUMBER}
                     """
                 }
             }
